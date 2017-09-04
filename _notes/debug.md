@@ -7,3 +7,5 @@
 
   Add debugger; into app
 
+## Node Inspector
+  $ node inspect playground/debugging.js

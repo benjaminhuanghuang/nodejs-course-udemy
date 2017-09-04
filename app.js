@@ -1,3 +1,10 @@
+/*
+  Usage:
+    node app.js read --title="to buy"
+    node app.js add --title="to buy" --body="food"
+  
+*/
+
 console.log("Starting app.js");
 const fs = require("fs");
 const _ = require("lodash");
@@ -27,4 +34,10 @@ if (command === "add") {
   } else {
     console.log("Note not found");
   }
+} else if (command === "remove") {
+  var noteRemoved = notes.removeNote(argv.title);
+  var message = noteRemoved ? "Note was removed" : "Note not found";
+  console.log(message);
+} else {
+  console.log("Command not recognized");
 }
