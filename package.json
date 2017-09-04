@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-mongo-ut-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha server/**/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminhuanghuang/nodejs-mongo-ut-todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjaminhuanghuang/nodejs-mongo-ut-todo/issues"
+  },
+  "homepage": "https://github.com/benjaminhuanghuang/nodejs-mongo-ut-todo#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "expect": "^1.20.2",
+    "mocha": "^3.5.0",
+    "nodemon": "^1.11.0"
+  }
+}
