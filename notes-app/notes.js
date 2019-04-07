@@ -10,8 +10,13 @@ const getNote = (title) => {
   // });
 
   const note = notes.fine((note)=> note.title=== title);
-
-  return note;
+  if(note)
+  {
+    console.log(chalk.inverse(note.title));
+  }
+  else{
+    console.log(chalk.red.inverse('Note not found'));
+  }
 }
 
 const listNotes = () => {
@@ -73,7 +78,7 @@ const saveNotes = (notes) => {
 }
 
 module.exports = {
-  getNotes,
+  getNote,
   listNotes,
   addNote,
   removeNote
