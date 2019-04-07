@@ -3,42 +3,60 @@ const chalk = require('chalk');
 //
 const FIEL_NAME = 'notes.json';
 
-const getNotes = function () {
+const getNote = (title) => {
+  const notes = loadNotes();
+  // const notes = notes.filter((note) => {
+  //   return note.title === title;
+  // });
 
+  const note = notes.fine((note)=> note.title=== title);
+
+  return note;
 }
 
-
-const addNote = function (title, body) {
+const listNotes = () => {
   const notes = loadNotes();
-  const duplicateNote = notes.filter((note) => {
-    return note.title === title;
-  });
 
-  if (duplicateNote.length === 0) {
+  console.log(chalk.inverse('Your notes'));
+
+  notes.forEach((note)=>{
+    console.log(note.title);
+  });
+}
+
+const addNote = (title, body) => {
+  const notes = loadNotes();
+  const duplicateNote = notes.fine((note)=> note.title=== title);
+
+  if (!duplicateNote) {
     notes.push({
       title: title,
       body: body
     });
     saveNotes(notes);
+    console.log(chalk.green.inverse('New note was added'));
   }
   else {
-    console.log("No new note added");
+    console.log(chalk.red.inverse("Note title was taken"));
   }
 }
-const removeNote = function (title)
-{
+
+const removeNote = (title) => {
   const notes = loadNotes();
   const notesToKeep = notes.filter((note) => {
     return note.title !== title;
   });
 
-  if(notes.length > notesToKeep.length)
-  {
+  if (notes.length > notesToKeep.length) {
     saveNotes(notesToKeep);
     console.log(chalk.green.inverse('Note was removed'));
   }
+  else {
+    console.log(chalk.red.inverse('No note found'));
+  }
 }
-const loadNotes = function () {
+
+const loadNotes = () => {
   try {
     const dataBuffer = fs.readFileSync(FIEL_NAME);
     const dataJSON = dataBuffer.toString();
@@ -49,13 +67,14 @@ const loadNotes = function () {
   }
 }
 
-const saveNotes = function (notes) {
+const saveNotes = (notes) => {
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync(FIEL_NAME, dataJSON);
 }
 
 module.exports = {
   getNotes,
+  listNotes,
   addNote,
   removeNote
 };
