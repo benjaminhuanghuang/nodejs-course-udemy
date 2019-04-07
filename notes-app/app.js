@@ -1,9 +1,8 @@
 
-const chalk = require('chalk')
 const yargs = require('yargs');
 
 //
-const {getNotes, addNote} = require('./notes');
+const notes = require('./notes');
 
 
 // Create add command
@@ -11,9 +10,6 @@ yargs.command(
   {
     command: 'add',   // handle: node app.js add --title="abc"
     describe: 'Add new note',
-    handler: function (argv) {
-      console.log('Add new note ', argv);
-    },
     builder:{
       title:{
         describe: 'Note title',
@@ -26,6 +22,9 @@ yargs.command(
         demandOption : true,
         type: 'string'
       }
+    },
+    handler: function (argv) {
+      notes.addNote(argv.title, argv.body);
     }
   }
 );
