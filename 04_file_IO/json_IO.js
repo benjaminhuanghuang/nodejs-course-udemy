@@ -7,7 +7,7 @@ const book ={
   author: "Wu chenen"
 }
 
-// string
+// Object -> string
 const bookJSON = JSON.stringify(book);
 
 fs.writeFileSync('1.json', bookJSON);
@@ -15,5 +15,5 @@ fs.writeFileSync('1.json', bookJSON);
 const dataBuffer = fs.readFileSync('1.json');
 const dataJSON = dataBuffer.toString();
 console.log(dataJSON);
-
+// String -> Object
 const data = JSON.parse(dataJSON);

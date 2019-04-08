@@ -23,7 +23,7 @@ const listNotes = () => {
   const notes = loadNotes();
 
   console.log(chalk.inverse('Your notes'));
-
+  debugger
   notes.forEach((note)=>{
     console.log(note.title);
   });
