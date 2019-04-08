@@ -1,7 +1,7 @@
 
 
 ## Debug using Node Inspector
-1. Insert debugger into source code.
+1. Insert debugger; into source code.
 
 2. Start node inspect
 ```
@@ -14,5 +14,12 @@
   c : continue
   quit
   repl
+  rettart
 
-  Add debugger; into app
+Or
+1. Start node inspect
+```
+  $ node inspect app.js
+```
+2. Open "chrome://inspect" in chrom
+3. Set breakpoint in Chrome
