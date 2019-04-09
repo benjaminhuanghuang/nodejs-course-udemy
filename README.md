@@ -6,4 +6,7 @@
   - https://www.udemy.com/the-complete-nodejs-developer-course-2/
 
 
-##
+## Mogodb for project
+```
+  docker-compose up -d mongodb
+```

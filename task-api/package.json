@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-mongo-task-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express":"^4.16.4",
+    "mongoose": "^5.5.0",
+    "validator":"^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
