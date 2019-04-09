@@ -43,10 +43,8 @@
 - Create task: POST /tasks
 ```
 {
-	"age":99,
-	"name":"Benjamin",
-	"email":"ben@gmail.com",
-	"password":"abcd1234"
+	"description":"this is my first task",
+	"completed": false
 }
 ```
 
@@ -57,10 +55,8 @@
 - Update task: PATCH /tasks/5caccf35bb4d596822ccf02b
 ```
 {
-	"age":44,
-	"name":"Benjamin",
-	"email":"ben@gmail.com",
-	"password":"abcd1234"
+	"description":"this is my first task",
+	"completed": false
 }
 ```
 - Delete task: DELETE /tasks/5caccf35bb4d596822ccf02b
