@@ -77,7 +77,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-// Arrow funciton don't bind 'this'
+// Schema middleware, Arrow funciton don't bind 'this'
 userSchema.pre('save', async function (next) {
     const user = this
 
