@@ -31,3 +31,9 @@ me.save().then(() => {
 }).catch((error) => {
     console.log('Error!', error)
 })
+
+User.findById(_id).then((user) => {
+  console.log(user)
+}).catch((e) => {
+  console.log(e)
+})
