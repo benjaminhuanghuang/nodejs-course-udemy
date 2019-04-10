@@ -41,6 +41,8 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    // Keep the token in array to allow user log-in from multiple devices. 
+    // Log out for one while still being logged in to the other
     tokens: [{
         token: {
             type: String,
@@ -53,7 +55,9 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
-
+    // Track the token for log-out
+    // Keep the token in array to allow user log-in from multiple devices. 
+    // Log out for one while still being logged in to the other
     user.tokens = user.tokens.concat({ token })
     await user.save()
 
