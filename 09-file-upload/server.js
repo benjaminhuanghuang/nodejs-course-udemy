@@ -6,7 +6,7 @@ const app = express();
 const port = 3333
 
 const upload = multer({
-  dest: 'avatars',
+  dest: 'avatars',    // Remove it when save file to database
   limits: {
       fileSize: 1000000
   },

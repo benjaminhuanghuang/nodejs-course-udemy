@@ -10,14 +10,6 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
-const upload = multer({
-    dest: 'image'
-});
-
-app.post('/upload', upload.single('upload'), (req, res) => {
-    res.send();
-})
-
 // Using router
 app.use(userRouter)
 app.use(taskRouter)
