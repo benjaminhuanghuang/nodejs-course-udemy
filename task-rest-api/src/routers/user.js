@@ -10,13 +10,13 @@ router.post('/users', async (req, res) => {
   try {
     await user.save()
     const token = await user.generateAuthToken()
-    res.status(201).send({user, token})
+    res.status(201).send({ user, token })
   } catch (e) {
     res.status(400).send(e)
   }
 })
 
-/* Those 3 method were used to demo CRUD
+/* Those 3 method were used to demo CRUD, User only can access his own data
 router.get('/users', auth, async (req, res) => {
   try {
     const users = await User.find({})
@@ -71,7 +71,7 @@ router.get('/users/me', auth, async (req, res) => {
   res.send(req.user);
 })
 
-router.delete('/users/me', auth,  async (req, res) => {
+router.delete('/users/me', auth, async (req, res) => {
   try {
     await req.user.remove()
 
@@ -82,19 +82,24 @@ router.delete('/users/me', auth,  async (req, res) => {
 })
 
 
-router.delete('/users/:id', auth, async (req, res) => {
+router.patch('/users/me', auth, async (req, res) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['name', 'email', 'password', 'age']
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' })
+  }
+
   try {
-    const user = await User.findByIdAndDelete(req.params.id)
-
-    if (!user) {
-      return res.status(404).send()
-    }
-
-    res.send(user)
+    updates.forEach((update) => req.user[update] = req.body[update])
+    await req.user.save()
+    res.send(req.user)
   } catch (e) {
-    res.status(500).send()
+    res.status(400).send(e)
   }
 })
+
 
 // Generate token and send it back to user
 router.post('/users/login', async (req, res) => {
@@ -107,11 +112,11 @@ router.post('/users/login', async (req, res) => {
   }
 })
 
-router.post('/users/logout', async (req, res) => {
+router.post('/users/logout', auth, async (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter((token)=>{
+    req.user.tokens = req.user.tokens.filter((token) => {
       return token.token != req.token
-    }) 
+    })
     await req.user.save();
     res.send();
   } catch (e) {
