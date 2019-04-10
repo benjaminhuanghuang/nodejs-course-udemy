@@ -10,6 +10,7 @@ const Task = mongoose.model('Task', {
         type: Boolean,
         default: false
     },
+    // task to user 1: 1
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -17,4 +18,21 @@ const Task = mongoose.model('Task', {
     }
 })
 
-module.exports = Task 
+
+const userSchema = new mongoose.Schema({
+  name: {
+      type: String,
+      required: true,
+      trim: true
+  }})
+
+// user -> tasks  1: N 
+userSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'owner'
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = {User, Task};
