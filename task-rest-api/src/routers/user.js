@@ -3,6 +3,7 @@ const User = require('../models/user')
 const auth = require('../middleware/auth')
 const router = new express.Router()
 
+// Sign up user
 router.post('/users', async (req, res) => {
   const user = new User(req.body)
 
@@ -15,7 +16,8 @@ router.post('/users', async (req, res) => {
   }
 })
 
-router.get('/users', async (req, res) => {
+/* Those 3 method were used to demo CRUD
+router.get('/users', auth, async (req, res) => {
   try {
     const users = await User.find({})
     res.send(users)
@@ -24,23 +26,7 @@ router.get('/users', async (req, res) => {
   }
 })
 
-router.get('/users/:id', async (req, res) => {
-  const _id = req.params.id
-
-  try {
-    const user = await User.findById(_id)
-
-    if (!user) {
-      return res.status(404).send()
-    }
-
-    res.send(user)
-  } catch (e) {
-    res.status(500).send()
-  }
-})
-
-router.patch('/users/:id', async (req, res) => {
+router.patch('/users/:id', auth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['name', 'email', 'password', 'age']
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -50,7 +36,6 @@ router.patch('/users/:id', async (req, res) => {
   }
 
   try {
-
     //const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
     // take advantage of schema middleware
     const user = await User.findById(req.params.id)
@@ -67,7 +52,37 @@ router.patch('/users/:id', async (req, res) => {
   }
 })
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', auth, async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id)
+
+    if (!user) {
+      return res.status(404).send()
+    }
+
+    res.send(user)
+  } catch (e) {
+    res.status(500).send()
+  }
+})
+*/
+router.get('/users/me', auth, async (req, res) => {
+  // auth middle stored req.user
+  res.send(req.user);
+})
+
+router.delete('/users/me', auth,  async (req, res) => {
+  try {
+    await req.user.remove()
+
+    res.send(req.user)
+  } catch (e) {
+    res.status(500).send()
+  }
+})
+
+
+router.delete('/users/:id', auth, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id)
 
@@ -89,6 +104,28 @@ router.post('/users/login', async (req, res) => {
     res.send({ user, token })
   } catch (e) {
     res.status(400).send()
+  }
+})
+
+router.post('/users/logout', async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token)=>{
+      return token.token != req.token
+    }) 
+    await req.user.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send()
+  }
+})
+
+router.post('/users/logoutAll', async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send()
   }
 })
 

@@ -64,6 +64,18 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
+// Hide secret data, req.send will use this method to stringify object
+// JSON.stringify will call object.toJSON()
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
+
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+
 // Add static function
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
