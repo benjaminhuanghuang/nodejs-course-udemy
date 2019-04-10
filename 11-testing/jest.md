@@ -4,7 +4,7 @@
 ```
 - Script
 ```
-  "test": "jest"
+  "test": "jest --watch"
 ```
 
 
