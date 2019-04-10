@@ -4,7 +4,7 @@ const app = express();
 //
 const port = 3333
 
-//
+// application level middleware
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   if (req.method === 'GET') {
