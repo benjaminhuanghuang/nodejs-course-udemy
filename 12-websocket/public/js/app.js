@@ -1,6 +1,6 @@
-const socket = io()   // build connection with server
+const socket = io()
 
-socket.on('message', (message) => {
+socket.on('msg-server', (message) => {
   console.log(message)
 })
 
@@ -9,5 +9,5 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
 
   const message = e.target.elements.message.value
 
-  socket.emit('sendMessage', message)
+  socket.emit('msg-client', message)
 })
