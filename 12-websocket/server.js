@@ -21,9 +21,15 @@ io.on('connection', (socket) => {
     // emit to every client except current socket
     socket.broadcast.emit('msg-server', 'A new client has joined!')
 
-    socket.on('msg-client', (message) => {
+    socket.on('msg-client', (message, callback) => {
         // emit message to all client
         io.emit('msg-server', message)
+        callback('Message was received by server');
+    })
+
+    socket.on('disconnect', (message) => {
+        // emit message to all client
+        io.emit('msg-server', "User was left")
     })
 })
 
