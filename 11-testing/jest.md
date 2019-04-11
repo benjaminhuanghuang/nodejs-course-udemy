@@ -6,5 +6,9 @@
 ```
   "test": "jest --watch"
 ```
-
-
+- Add settings into package.json
+```
+"jest": {
+    "testEnvironment": "node"
+  },
+```
